@@ -8,7 +8,32 @@
 </head>
 <body>
   <div id="game-root"></div>
-  <div id="ui"></div>
+  <div id="ui">
+    <div id="start-screen" class="panel">
+      <h1>3-Lane Runner 3D</h1>
+      <label>Player Name <input id="player-name" placeholder="Player" /></label>
+      <button id="start-btn">Start Game</button>
+      <p>Controls: Click lane buttons or press 1/2/3 or Arrow Left/Right to switch lanes.</p>
+    </div>
+    <div id="game-screen" class="panel" style="display:none;">
+      <div class="hud">
+        <div>Prize: <span id="score">£0.00</span></div>
+        <div>Checkpoint: <span id="checkpoint">1</span></div>
+      </div>
+      <div class="lanes-buttons">
+        <button class="lane" data-lane="0">Lane 1</button>
+        <button class="lane" data-lane="1">Lane 2</button>
+        <button class="lane" data-lane="2">Lane 3</button>
+      </div>
+      <div id="log" class="log"></div>
+    </div>
+    <div id="end-screen" class="panel" style="display:none;">
+      <h2>Game Over</h2>
+      <p>Final Score: <span id="final-score"></span></p>
+      <p id="summary"></p>
+      <button id="restart-btn">Restart</button>
+    </div>
+  </div>
   <script type="module" src="./js/main.js"></script>
 </body>
 </html>
