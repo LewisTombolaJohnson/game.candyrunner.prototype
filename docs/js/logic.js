@@ -1,0 +1,10 @@
+// Copy of public/js/logic.js for GitHub Pages self-contained deployment
+export class CheckpointResult { constructor({ index, chosenLane, safe, obstacleLanes, prizeDeltaPence, totalPrizePence, ended }) { Object.assign(this,{ index, chosenLane, safe, obstacleLanes, prizeDeltaPence, totalPrizePence, ended }); }}
+const DEFAULT_CONFIG={ lanes:3, maxCheckpoints:20, obstacleProbability:1.0, checkpointPrizePence:25, coinPrizePence:10 };
+export class Game { constructor(config={}){ this.config={...DEFAULT_CONFIG,...config}; this.currentCheckpoint=0; this.prizePence=0; this.history=[]; this.over=false; this.pendingObstacleLanes=null; this.awaitingChoice=false; }
+ generateObstacleLanes(){ const lanes=[]; const count=(this.currentCheckpoint>=10)?Math.min(2,this.config.lanes-1):1; while(lanes.length<count){ const cand=Math.floor(Math.random()*this.config.lanes); if(!lanes.includes(cand)) lanes.push(cand);} return lanes; }
+ startSegment(){ if(this.over) return null; this.pendingObstacleLanes=this.generateObstacleLanes(); this.awaitingChoice=true; return this.pendingObstacleLanes; }
+ resolveChoice(chosenLane){ if(!this.awaitingChoice||this.over) return null; const { lanes, checkpointPrizePence, maxCheckpoints }=this.config; if(chosenLane<0||chosenLane>=lanes) throw new Error('Invalid lane'); const obstacleLanes=this.pendingObstacleLanes||[]; const safe=!obstacleLanes.includes(chosenLane); let prizeDeltaPence=0; let ended=false; if(safe){ prizeDeltaPence=checkpointPrizePence; this.prizePence+=prizeDeltaPence; } else { this.over=true; ended=true; }
+ const result=new CheckpointResult({ index:this.currentCheckpoint, chosenLane, safe, obstacleLanes, prizeDeltaPence, totalPrizePence:this.prizePence, ended }); this.history.push(result); this.currentCheckpoint++; this.awaitingChoice=false; this.pendingObstacleLanes=null; if(!this.over && this.currentCheckpoint>=maxCheckpoints) this.over=true; return result; }
+ chooseLane(lane){ this.startSegment(); return this.resolveChoice(lane); }
+ isOver(){ return this.over; } getSummary(){ return { ...this }; }}
