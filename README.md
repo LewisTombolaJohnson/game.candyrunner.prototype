@@ -84,6 +84,37 @@ public/
 serve.mjs          # Simple static server
 ```
 
+### Deploying / Playing on GitHub Pages
+
+This repository includes a `/docs` folder so you can host the browser game directly from GitHub Pages.
+
+Steps:
+1. Push the repo to GitHub (already done if you're reading this there).
+2. In the repository on GitHub go to: Settings -> Pages.
+3. Under "Build and deployment" choose:
+  - Source: `Deploy from a branch`
+  - Branch: `main` / folder: `/docs`
+4. Save. GitHub will publish the site at:
+  `https://<your-username>.github.io/<repo-name>/`
+
+For this repo the expected URL is:
+`https://lewistombolajohnson.github.io/game.candyrunner.prototype/`
+
+If you change file organization, ensure `docs/index.html` loads assets with relative paths (all current paths are relative and self-contained). A `.nojekyll` file is included to prevent Jekyll from interfering with the module folder paths.
+
+#### Local Preview of the /docs build
+You can test the GitHub Pages bundle locally (serves root so relative paths behave) using any static server, e.g.:
+
+```bash
+npx serve docs
+```
+
+Open the listed localhost URL – the game should start without build tooling.
+
+#### Custom Domain (Optional)
+Add a `CNAME` file inside `docs/` with your domain name (e.g. `play.example.com`) and configure DNS (CNAME to `username.github.io`).
+
+
 ## Possible Extensions
 - Add hearts/lives instead of score penalties.
 - Multiple obstacles or moving obstacles.
