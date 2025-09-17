@@ -1,0 +1,19 @@
+{
+  "name": "three-lane-runner",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "CLI 3-lane runner checkpoint game",
+  "scripts": {
+    "start": "node src/index.js",
+    "play": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "serve": "node serve.mjs"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["game", "cli", "runner"],
+  "dependencies": {},
+  "devDependencies": {}
+}
